@@ -1,0 +1,463 @@
+:root {
+    --pika1: #54a29e;
+    --pika2: #a79d66;
+    --eevee1: #efb2fb;
+    --eevee2: #acc6f8;
+    --card-glow: hsl(54, 87%, 63%);
+    --card-edge: hsl(47, 100%, 78%);
+    --grain: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCI+CjxmaWx0ZXIgaWQ9Im4iPgo8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjEwIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIj48L2ZlVHVyYnVsZW5jZT4KPC9maWx0ZXI+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjMDAwIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjAuMyI+PC9yZWN0Pgo8L3N2Zz4=");
+    --space: 5%;
+    --angle: 133deg;
+    --pointer-x: 0;
+    --pointer-y: 0;
+    --card-opacity: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background-color: #333844;
+    font-family: Helvetica, sans-serif;
+    color: rgb(211, 211, 211);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.flip-card-front.eevee,
+.flip-card-back.eevee {
+    --color1: #ec9bb6;
+    --color2: #ccac6f;
+    --color3: #69e4a5;
+    --color4: #8ec5d6;
+    --color5: #b98cce;
+    --sparkles: url(/Card-glare-project/assets/img/sparkles/sparkles.gif);
+    --holo: url(/Card-glare-project/assets/img/holo/holo.webp);
+    --overlay_sparkles: var(--sparkles), var(--holo);
+    --glare: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%,hsla(0, 0%, 0%, 0.5) 90%);
+    --effect: var(--sparkles), var(--glare);
+}
+
+.flip-card-front.pika,
+.flip-card-back.pika {
+    --color1: var(--pika1);
+    --color2: var(--pika2);
+    --sparkles: url(/Card-glare-project/assets/img/sparkles/sparkles1.gif);
+    --holo: url(/Card-glare-project/assets/img/holo/holo.webp);
+    --overlay_sparkles: var(--sparkles), var(--holo);
+    --glare: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%,hsla(0, 0%, 0%, 0.5) 90%);
+    --effect: var(--overlay_sparkles), var(--glare);
+}
+
+.flip-card-container {
+    width: 350px;
+    height: 500px;
+    margin: 0 50px;
+    /* adjust as needed */
+    perspective: 800px;
+    border-radius: 5%/3.5%;
+}
+
+.flip-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-card-container.flipped .flip-card {
+    transform: rotateY(540deg);
+}
+
+/* Position the front and back side */
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    /* Safari */
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5%/3.5%;
+}
+
+.flip-card-front {
+    color: #fff;
+    overflow: hidden;
+    z-index: 10;
+    touch-action: none;
+    border-radius: 5%/3.5%;
+    box-shadow:
+        0 0 3px -1px transparent,
+        0 0 2px 1px transparent,
+        0 0 5px 0px transparent,
+        0px 10px 20px -5px black,
+        0 2px 15px -5px black,
+        0 0 20px 0px transparent;
+    transition: transform 0.5s ease, box-shadow 0.2s ease;
+    will-change: transform, filter;
+    background-color: #333;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    transform-origin: center;
+}
+
+.flip-card-back {
+    color: #fff;
+    overflow: hidden;
+    z-index: 10;
+    touch-action: none;
+    border-radius: 5%/3.5%;
+    box-shadow:
+        0 0 3px -1px transparent,
+        0 0 2px 1px transparent,
+        0 0 5px 0px transparent,
+        0px 10px 20px -5px black,
+        0 2px 15px -5px black,
+        0 0 20px 0px transparent;
+    transition: transform 0.5s ease, box-shadow 0.2s ease;
+    will-change: transform, filter;
+    background-color: #333;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    transform-origin: center;
+    transform: rotateY(180deg);
+}
+
+.flip-card-front img,
+.flip-card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5%/3.5%;
+}
+
+/* Effect */
+.flip-card-front:hover,
+.flip-card-back:hover {
+    cursor: pointer;
+    box-shadow: 0 0 3px -1px white, 0 0 3px 1px var(--card-edge), 0 0 12px 2px var(--color2), 0px 10px 20px -5px black, 0 0 40px -30px var(--color2), 0 0 50px -20px var(--color2);
+}
+
+.flip-card-front:before,
+.flip-card-front:after,
+.flip-card-back:before,
+.flip-card-back:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    mix-blend-mode: color-dodge;
+    transition: all 0.33s ease;
+}
+
+.flip-card-front:before,
+.flip-card-back:before {
+    background-position: 50% 50%;
+    background-size: 300% 300%;
+    background-image: linear-gradient(115deg, transparent 0%, var(--color1) 25%, transparent 47%, transparent 53%, var(--color2) 75%, transparent 100%);
+    opacity: 0.5;
+    filter: brightness(0.5) contrast(1);
+    z-index: 1;
+}
+
+.flip-card-front:after {
+    opacity: 1;
+    /* background-image: var(--sparkles), var(--holo), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%); */
+    background-image: var(--effect);
+    background-position: 50% 50%;
+    background-size: 160%;
+    background-blend-mode: overlay;
+    z-index: 2;
+    filter: brightness(1) contrast(1);
+    transition: all 0.33s ease;
+    mix-blend-mode: color-dodge;
+    opacity: 0.75;
+}
+
+.flip-card-front.active:after,
+.flip-card-front:hover:after,
+.flip-card-back.active:after,
+.flip-card-back:hover:after {
+    filter: brightness(1) contrast(1);
+    opacity: 1;
+}
+
+.flip-card-front.active,
+.flip-card-front:hover,
+.flip-card-back.active,
+.flip-card-back:hover {
+    -webkit-animation: none;
+    animation: none;
+    transition: box-shadow 0.1s ease-out;
+}
+
+.flip-card-front.active:before,
+.flip-card-front:hover:before,
+.flip-card-back.active:before,
+.flip-card-back:hover:before {
+    -webkit-animation: none;
+    animation: none;
+    background-image: linear-gradient(110deg, transparent 25%, var(--color1) 48%, var(--color2) 52%, transparent 75%);
+    background-position: 50% 50%;
+    background-size: 250% 250%;
+    opacity: 0.88;
+    filter: brightness(0.66) contrast(1.33);
+    transition: none;
+}
+
+.flip-card-front.active:before,
+.flip-card-front:hover:before,
+.flip-card-front.active:after,
+.flip-card-front:hover:after,
+.flip-card-back.active:before,
+.flip-card-back:hover:before,
+.flip-card-back.active:after,
+.flip-card-back:hover:after {
+    -webkit-animation: none;
+    animation: none;
+    transition: none;
+}
+
+.flip-card-front.animated,
+.flip-card-back.animated {
+    transition: none;
+    -webkit-animation: holoCard 12s ease 0s 1;
+    animation: holoCard 12s ease 0s 1;
+}
+
+.flip-card-front.animated:before,
+.flip-card-back.animated:before {
+    transition: none;
+    -webkit-animation: holoGradient 12s ease 0s 1;
+    animation: holoGradient 12s ease 0s 1;
+}
+
+.flip-card-front.animated:after,
+.flip-card-back.animated:after {
+    transition: none;
+    -webkit-animation: holoSparkle 12s ease 0s 1;
+    animation: holoSparkle 12s ease 0s 1;
+}
+
+@-webkit-keyframes holoSparkle {
+
+    0%,
+    100% {
+        opacity: 0.75;
+        background-position: 50% 50%;
+        filter: brightness(1.2) contrast(1.25);
+    }
+
+    5%,
+    8% {
+        opacity: 1;
+        background-position: 40% 40%;
+        filter: brightness(0.8) contrast(1.2);
+    }
+
+    13%,
+    16% {
+        opacity: 0.5;
+        background-position: 50% 50%;
+        filter: brightness(1.2) contrast(0.8);
+    }
+
+    35%,
+    38% {
+        opacity: 1;
+        background-position: 60% 60%;
+        filter: brightness(1) contrast(1);
+    }
+
+    55% {
+        opacity: 0.33;
+        background-position: 45% 45%;
+        filter: brightness(1.2) contrast(1.25);
+    }
+}
+
+@keyframes holoSparkle {
+
+    0%,
+    100% {
+        opacity: 0.75;
+        background-position: 50% 50%;
+        filter: brightness(1.2) contrast(1.25);
+    }
+
+    5%,
+    8% {
+        opacity: 1;
+        background-position: 40% 40%;
+        filter: brightness(0.8) contrast(1.2);
+    }
+
+    13%,
+    16% {
+        opacity: 0.5;
+        background-position: 50% 50%;
+        filter: brightness(1.2) contrast(0.8);
+    }
+
+    35%,
+    38% {
+        opacity: 1;
+        background-position: 60% 60%;
+        filter: brightness(1) contrast(1);
+    }
+
+    55% {
+        opacity: 0.33;
+        background-position: 45% 45%;
+        filter: brightness(1.2) contrast(1.25);
+    }
+}
+
+@-webkit-keyframes holoGradient {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        background-position: 50% 50%;
+        filter: brightness(0.5) contrast(1);
+    }
+
+    5%,
+    9% {
+        background-position: 100% 100%;
+        opacity: 1;
+        filter: brightness(0.75) contrast(1.25);
+    }
+
+    13%,
+    17% {
+        background-position: 0% 0%;
+        opacity: 0.88;
+    }
+
+    35%,
+    39% {
+        background-position: 100% 100%;
+        opacity: 1;
+        filter: brightness(0.5) contrast(1);
+    }
+
+    55% {
+        background-position: 0% 0%;
+        opacity: 1;
+        filter: brightness(0.75) contrast(1.25);
+    }
+}
+
+@keyframes holoGradient {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        background-position: 50% 50%;
+        filter: brightness(0.5) contrast(1);
+    }
+
+    5%,
+    9% {
+        background-position: 100% 100%;
+        opacity: 1;
+        filter: brightness(0.75) contrast(1.25);
+    }
+
+    13%,
+    17% {
+        background-position: 0% 0%;
+        opacity: 0.88;
+    }
+
+    35%,
+    39% {
+        background-position: 100% 100%;
+        opacity: 1;
+        filter: brightness(0.5) contrast(1);
+    }
+
+    55% {
+        background-position: 0% 0%;
+        opacity: 1;
+        filter: brightness(0.75) contrast(1.25);
+    }
+}
+
+@-webkit-keyframes holoCard {
+
+    0%,
+    100% {
+        transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+    }
+
+    5%,
+    8% {
+        transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
+    }
+
+    13%,
+    16% {
+        transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
+    }
+
+    35%,
+    38% {
+        transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+    }
+
+    55% {
+        transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+    }
+}
+
+@keyframes holoCard {
+
+    0%,
+    100% {
+        transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+    }
+
+    5%,
+    8% {
+        transform: rotateZ(0deg) rotateX(6deg) rotateY(-20deg);
+    }
+
+    13%,
+    16% {
+        transform: rotateZ(0deg) rotateX(-9deg) rotateY(32deg);
+    }
+
+    35%,
+    38% {
+        transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+    }
+
+    55% {
+        transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+    }
+}

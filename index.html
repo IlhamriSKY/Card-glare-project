@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./assets/style/style.css">
+    <title>Flip Card</title>
+</head>
+
+<body>
+    <div class="cards">
+        <div class="flip-card-container flip-card-container-clickable" id="demo_1">
+            <div class="flip-card">
+                <div class="flip-card-front eevee" style="background-image: url(./assets/img/image/back3.png)">
+                </div>
+                <div class="flip-card-back eevee" style="background-image: url(./assets/img/image/back1.png)">
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card-container flip-card-container-clickable" id="demo_2">
+            <div class="flip-card">
+                <div class="flip-card-front pika" style="background-image: url(./assets/img/image/back4.png)">
+                </div>
+                <div class="flip-card-back pika" style="background-image: url(./assets/img/image/back2.png)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style class="hover"></style>
+
+    <script src='./assets/js/jquery.min.js'></script>
+    <script src='./assets/js/vanilla-tilt.min.js'></script>
+    <script type="text/javascript">
+        // select all flip-card-container-clickable elements using class selector
+        let eventBoxes = document.querySelectorAll(".flip-card-container-clickable");
+        var x;
+        var $cards = $(".flip-card-container");
+        var $style = $(".hover");
+        var $style1 = $(".hover1");
+
+        // tilt init
+        VanillaTilt.init(eventBoxes, {
+            max: 25,
+            speed: 2500,
+        });
+
+        for (let i = 0; i < eventBoxes.length; i++) {
+            eventBoxes[i].addEventListener('click', function () {
+                this.classList.toggle('flipped');
+            });
+        }
+
+        // iterate through each eventBox and initialize VanillaTilt for each one
+        eventBoxes.forEach(function (eventBox) {
+            eventBox.addEventListener('mousemove', function (event) {
+                var pos = [event.offsetX, event.offsetY];
+                event.preventDefault();
+                if (event.type === "touchmove") {
+                    pos = [event.touches[0].clientX, event.touches[0].clientY];
+                }
+
+                var $card = $(this);
+                // math for mouse position
+                var l = pos[0];
+                var t = pos[1];
+                var h = $card.height();
+                var w = $card.width();
+                var px = Math.abs(Math.floor(100 / w * l) - 100);
+                var py = Math.abs(Math.floor(100 / h * t) - 100);
+
+                var pxx = Math.floor(100 / w * l);
+                var pyy = Math.floor(100 / h * t);
+                var lpp = (50 + (pxx - 50) / 1.5);
+                var tpp = (50 + (pyy - 50) / 1.5);
+
+                var pa = (50 - px) + (50 - py);
+                // math for gradient / background positions
+                var lp = (50 + (px - 50) / 1.5);
+                var tp = (50 + (py - 50) / 1.5);
+                var px_spark = (50 + (px - 50) / 7);
+                var py_spark = (50 + (py - 50) / 7);
+                var p_opc = 20 + (Math.abs(pa) * 1.5);
+                var ty = ((tp - 50) / 2) * -1;
+                var tx = ((lp - 50) / 1.5) * .5;
+                // css to apply for active card
+                var grad_pos = `background-position: ${lp}% ${tp}%;`
+                var sprk_pos = `background-position: ${px_spark}% ${py_spark}%;`
+                var opc = `opacity: ${p_opc/100};`
+
+                // need to use a <style> tag for psuedo elements
+                var style = `
+                    .flip-card-front:hover:before { ${grad_pos} }  /* gradient */
+                    .flip-card-front:hover:after { ${sprk_pos} ${opc};}   /* sparkles */
+                    .flip-card-back:hover:before { ${grad_pos} }  /* gradient */
+
+                    .eevee:hover{ --pointer-x: ${lpp}%; --pointer-y: ${tpp}%; }
+                    .pika:hover{ --pointer-x: ${lpp}%; --pointer-y: ${tpp}%; }
+                `;
+
+                // set / apply css class and style
+                $cards.removeClass("active");
+                $card.removeClass("animated");
+                $style.html(style);
+            });
+        });
+    </script>
+</body>
+
+</html>
