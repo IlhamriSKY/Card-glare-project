@@ -1,15 +1,10 @@
 :root {
     --pika1: #54a29e;
     --pika2: #a79d66;
-    --eevee1: #efb2fb;
-    --eevee2: #acc6f8;
-    --card-glow: hsl(54, 87%, 63%);
     --card-edge: hsl(47, 100%, 78%);
     --grain: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCI+CjxmaWx0ZXIgaWQ9Im4iPgo8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjEwIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIj48L2ZlVHVyYnVsZW5jZT4KPC9maWx0ZXI+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjMDAwIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjAuMyI+PC9yZWN0Pgo8L3N2Zz4=");
     --space: 5%;
     --angle: 133deg;
-    --pointer-x: 0;
-    --pointer-y: 0;
     --card-opacity: 0;
 }
 
@@ -40,13 +35,11 @@ body {
 .flip-card-back.basic {
     --color1: var(--pika1);
     --color2: var(--pika2);
-    --sparkles: url(/Card-glare-project/assets/img/sparkles/sparkles.gif);
-    --holo: url(/Card-glare-project/assets/img/holo/holo.webp);
     --background-blend: lighten;
-    --max-blend: color-dodge;
-    --glare: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%,hsla(0, 0%, 0%, 0.5) 90%);
-    --overlay_sparkles: var(--sparkles), var(--holo);
-    --effect: var(--overlay_sparkles);
+    --max-blend: lighten;
+    --transform: 180deg;
+    --glare: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.65) 0%, rgba(255,255,255, 0) 80%);
+    --effect: var(--glare);
 }
 
 .flip-card-front.basic_glare,
@@ -56,12 +49,12 @@ body {
     --color3: #69e4a5;
     --color4: #8ec5d6;
     --color5: #b98cce;
+    --transform: 0deg;
+    --gradient: linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
     --sparkles: url(/Card-glare-project/assets/img/sparkles/sparkles.gif);
-    --holo: url(/Card-glare-project/assets/img/holo/holo.webp);
     --background-blend: lighten;
-    --max-blend: unset;
-    --glare: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%,hsla(0, 0%, 0%, 0.5) 90%);
-    --overlay_sparkles: var(--glare);
+    --max-blend: color-dodge;
+    --overlay_sparkles: var(--sparkles), var(--gradient);
     --effect: var(--overlay_sparkles);
 }
 
@@ -189,8 +182,8 @@ body {
 
 .flip-card-front:after {
     opacity: 1;
-    /* background-image: var(--sparkles), var(--holo), linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%); */
     background-image: var(--effect);
+    transform: rotate(var(--transform));
     background-position: 50% 50%;
     background-size: 160%;
     background-blend-mode: var(--background-blend);

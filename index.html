@@ -12,7 +12,7 @@
     <div class="cards">
         <div class="flip-card-container flip-card-container-clickable">
             <div class="flip-card">
-                <div class="flip-card-front basic" style="background-image: url(./assets/img/image/back3.png)">
+                <div class="flip-card-front basic" style="background-image: url(./assets/img/image/back4.png)">
                 </div>
                 <div class="flip-card-back basic" style="background-image: url(./assets/img/image/back1.png)">
                 </div>
@@ -70,11 +70,6 @@
                 var px = Math.abs(Math.floor(100 / w * l) - 100);
                 var py = Math.abs(Math.floor(100 / h * t) - 100);
 
-                var pxx = Math.floor(100 / w * l);
-                var pyy = Math.floor(100 / h * t);
-                var lpp = (50 + (pxx - 50) / 1.5);
-                var tpp = (50 + (pyy - 50) / 1.5);
-
                 var pa = (50 - px) + (50 - py);
                 // math for gradient / background positions
                 var lp = (50 + (px - 50) / 1.5);
@@ -95,15 +90,28 @@
                     .flip-card-front:hover:after { ${sprk_pos} ${opc};}   /* sparkles */
                     .flip-card-back:hover:before { ${grad_pos} }  /* gradient */
 
-                    .basic:hover{ --pointer-x: ${lpp}%; --pointer-y: ${tpp}%; }
-                    .basic_glare:hover{ --pointer-x: ${lpp}%; --pointer-y: ${tpp}%; }
+                    .basic:hover{ --pointer-x: ${lp}%; --pointer-y: ${tp}%; }
+                    .basic_glare:hover{ --pointer-x: ${lp}%; --pointer-y: ${tp}%; }
                 `;
 
                 // set / apply css class and style
                 $cards.removeClass("active");
                 $card.removeClass("animated");
                 $style.html(style);
+
+                clearTimeout(x);
             });
+
+            eventBox.addEventListener('mouseout', function (event) {
+                // remove css, apply custom animation on end
+                var $card = $(event.target).closest('.flip-card-container');
+                var $front = $card.find('.flip-card-front');
+                $style.html("");
+                $card.removeAttr("style");
+                x = setTimeout(function () {
+                  $front.addClass("animated");
+                }, 2500);
+              });
         });
     </script>
 </body>
