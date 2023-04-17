@@ -36,8 +36,21 @@ body {
     justify-content: space-between;
 }
 
-.flip-card-front.eevee,
-.flip-card-back.eevee {
+.flip-card-front.basic,
+.flip-card-back.basic {
+    --color1: var(--pika1);
+    --color2: var(--pika2);
+    --sparkles: url(/Card-glare-project/assets/img/sparkles/sparkles.gif);
+    --holo: url(/Card-glare-project/assets/img/holo/holo.webp);
+    --background-blend: lighten;
+    --max-blend: color-dodge;
+    --glare: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%,hsla(0, 0%, 0%, 0.5) 90%);
+    --overlay_sparkles: var(--sparkles), var(--holo);
+    --effect: var(--overlay_sparkles);
+}
+
+.flip-card-front.basic_glare,
+.flip-card-back.basic_glare {
     --color1: #ec9bb6;
     --color2: #ccac6f;
     --color3: #69e4a5;
@@ -45,20 +58,11 @@ body {
     --color5: #b98cce;
     --sparkles: url(/Card-glare-project/assets/img/sparkles/sparkles.gif);
     --holo: url(/Card-glare-project/assets/img/holo/holo.webp);
-    --overlay_sparkles: var(--sparkles), var(--holo);
+    --background-blend: lighten;
+    --max-blend: unset;
     --glare: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%,hsla(0, 0%, 0%, 0.5) 90%);
-    --effect: var(--sparkles), var(--glare);
-}
-
-.flip-card-front.pika,
-.flip-card-back.pika {
-    --color1: var(--pika1);
-    --color2: var(--pika2);
-    --sparkles: url(/Card-glare-project/assets/img/sparkles/sparkles1.gif);
-    --holo: url(/Card-glare-project/assets/img/holo/holo.webp);
-    --overlay_sparkles: var(--sparkles), var(--holo);
-    --glare: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%,hsla(0, 0%, 0%, 0.5) 90%);
-    --effect: var(--overlay_sparkles), var(--glare);
+    --overlay_sparkles: var(--glare);
+    --effect: var(--overlay_sparkles);
 }
 
 .flip-card-container {
@@ -189,11 +193,11 @@ body {
     background-image: var(--effect);
     background-position: 50% 50%;
     background-size: 160%;
-    background-blend-mode: overlay;
+    background-blend-mode: var(--background-blend);
     z-index: 2;
     filter: brightness(1) contrast(1);
     transition: all 0.33s ease;
-    mix-blend-mode: color-dodge;
+    mix-blend-mode: var(--max-blend);
     opacity: 0.75;
 }
 
