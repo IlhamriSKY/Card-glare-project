@@ -6,6 +6,7 @@
     --space: 5%;
     --angle: 133deg;
     --card-opacity: 0;
+    --holo:url(https://assets.codepen.io/13471/holo.png);
 }
 
 * {
